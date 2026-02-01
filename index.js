@@ -1,31 +1,45 @@
 import express from "express";
-import bodyParser from "body-parser";
+import { transliterate } from "arabic-transliteration";
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
-function transliterateArabic(text) {
-  const map = {
-    "م": "m", "ح": "h", "م": "m", "د": "d",
-    "ي": "y", "و": "w", "س": "s", "ف": "f",
-    "ع": "a", "ل": "l", "ا": "a", "ر": "r",
-    "ن": "n", "ب": "b", "ك": "k", "ت": "t"
+function smartTransliterate(text) {
+  if (!text) return "Nom vide";
+
+  // translittération brute
+  let result = transliterate(text, {
+    hamza: true,
+    longVowels: true
+  });
+
+  // corrections humaines (prononciation standard)
+  const fixes = {
+    "mHmd": "Muhammad",
+    "mHammad": "Muhammad",
+    "ywsf": "Yusuf",
+    "Ely": "Ali",
+    "AHmd": "Ahmad",
+    "fATmT": "Fatima",
+    "EbdAllh": "Abdullah"
   };
 
-  return text.split("").map(c => map[c] || "").join("")
-    .replace(/^mhmmd$/i, "Muhammad")
-    .replace(/^ysf$/i, "Yusuf");
+  return fixes[result] || result
+    .replace(/H/g, "h")
+    .replace(/E/g, "a")
+    .replace(/T$/g, "h");
 }
 
 app.post("/slack", (req, res) => {
-  const text = req.body.text || "";
-  const result = transliterateArabic(text);
+  const text = req.body.text?.trim();
 
-  res.json({
+  res.status(200).json({
     response_type: "in_channel",
-    text: `🔤 Prononciation phonétique : *${result || "Nom non reconnu"}*`
+    text: `🔤 Prononciation phonétique : *${smartTransliterate(text)}*`
   });
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Bot running"));
+app.listen(PORT, () =>
+  console.log("Achoura Phonetic Bot (smart) running on", PORT)
+);
