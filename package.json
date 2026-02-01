@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "Slack slash command to transliterate Arabic names to phonetic Latin (context-aware)",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node index.js"
   },
   "engines": {
-    "node": ">=16"
+    "node": "18.x"
   },
   "dependencies": {
     "arabic-transliteration": "^1.2.0",
     "body-parser": "^1.20.2",
     "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
   }
 }
