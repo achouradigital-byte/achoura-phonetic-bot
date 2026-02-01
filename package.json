@@ -1,7 +1,7 @@
 {
-  "name": "achoura-phonetic-bot",
+  "name": "railway-test",
   "version": "1.0.0",
-  "description": "Slack slash command to transliterate Arabic names to phonetic Latin (context-aware)",
+  "private": true,
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
@@ -11,8 +11,6 @@
     "node": "18.x"
   },
   "dependencies": {
-    "arabic-transliteration": "^1.2.0",
-    "body-parser": "^1.20.2",
     "express": "^4.18.2"
   }
 }
