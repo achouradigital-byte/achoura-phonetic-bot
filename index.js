@@ -1,3 +1,11 @@
+process.on("unhandledRejection", err => {
+  console.error("Unhandled Promise Rejection:", err);
+});
+
+process.on("uncaughtException", err => {
+  console.error("Uncaught Exception:", err);
+});
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const crypto = require("crypto");
