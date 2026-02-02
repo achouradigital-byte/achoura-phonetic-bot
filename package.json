@@ -1,5 +1,5 @@
 {
-  "name": "railway-test",
+  "name": "achoura-phonetic-bot",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
@@ -11,6 +11,8 @@
     "node": "18.x"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "arabic-transliteration": "^1.2.0"
   }
 }
